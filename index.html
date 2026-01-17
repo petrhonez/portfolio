@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - Engenharia de Controle e Automação</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ffa500;
+            --accent: #ffeb3b;
+            --text: #e0e0e0;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #0a0a0a;
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 212, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0, 212, 255, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(0, 212, 255, 0.05) 50%,
+                transparent 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9998;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            from { transform: translateY(0); }
+            to { transform: translateY(4px); }
+        }
+
+        header {
+            background: #000;
+            border-bottom: 2px solid var(--primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .logo::before {
+            content: "> ";
+            color: var(--accent);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::before {
+            content: "[ ";
+        }
+
+        nav a::after {
+            content: " ]";
+        }
+
+        nav a:hover {
+            text-shadow: 0 0 10px var(--primary);
+            color: var(--accent);
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            margin-top: 0;
+        }
+
+        .terminal-window {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .terminal-header {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .terminal-content {
+            font-size: 1.5rem;
+        }
+
+        .terminal-content h1 {
+            color: var(--primary);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary);
+            animation: fadeIn 1s ease;
+        }
+
+        .terminal-content p {
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease 0.3s backwards;
+            color: var(--text);
+        }
+
+        .cursor::after {
+            content: "_";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border: 2px solid var(--accent);
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 235, 59, 0.8);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            text-shadow: 0 0 10px var(--secondary);
+        }
+
+        h2::before {
+            content: "root@portfolio:~$ ";
+            color: var(--secondary);
+        }
+
+        .sobre-content, .contato {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .sobre-content p::before {
+            content: "> ";
+            color: var(--accent);
+        }
+
+        .habilidades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .habilidade-card {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .habilidade-card:hover {
+            box-shadow: 0 0 30px rgba(255, 165, 0, 0.6);
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .habilidade-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .habilidade-card h3::before {
+            content: "$ ";
+        }
+
+        .habilidade-card ul {
+            list-style: none;
+        }
+
+        .habilidade-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .habilidade-card li::before {
+            content: "• ";
+            color: var(--accent);
+        }
+
+        .habilidade-card li:last-child {
+            border-bottom: none;
+        }
+
+        .projetos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .projeto-card {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .projeto-card:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            transform: translateY(-5px);
+        }
+
+        .projeto-img {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .projeto-img img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px var(--primary));
+        }
+
+        .projeto-content {
+            padding: 1.5rem;
+        }
+
+        .projeto-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .projeto-content h3::before {
+            content: ">> ";
+        }
+
+        .projeto-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: transparent;
+            border: 1px solid var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .contato-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contato-link {
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            border: 2px solid var(--primary);
+            transition: all 0.3s;
+            font-size: 1.3rem;
+        }
+
+        .contato-link:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+        }
+
+        footer {
+            background: #000;
+            color: var(--text);
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+        }
+
+        footer::before {
+            content: "System status: ONLINE | ";
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .terminal-content h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">TERMINAL_v1.0</div>
+            <ul>
+                <li><a href="#inicio">inicio</a></li>
+                <li><a href="#sobre">sobre</a></li>
+                <li><a href="#habilidades">habilidades</a></li>
+                <li><a href="#projetos">projetos</a></li>
+                <li><a href="#contato">contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                user@portfolio:~$
+            </div>
+            <div class="terminal-content">
+                <h1>ENGENHEIRO DE CONTROLE E AUTOMAÇÃO</h1>
+                <p>> Desenvolvendo soluções inteligentes para o futuro da indústria<span class="cursor"></span></p>
+                <a href="#projetos" class="btn">[ VER PROJETOS ]</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2>sobre_mim.txt</h2>
+        <div class="sobre-content">
+            <p>Olá! Sou estudante de Engenharia de Controle e Automação apaixonado por tecnologia e inovação. Meu objetivo é desenvolver sistemas inteligentes que otimizem processos industriais e contribuam para um futuro mais automatizado e eficiente.</p>
+            <br>
+            <p>Estou em constante aprendizado, buscando sempre novos desafios que me permitam aplicar conhecimentos em programação, eletrônica, sistemas de controle e automação industrial.</p>
+        </div>
+    </section>
+
+    <section id="habilidades">
+        <h2>habilidades --list</h2>
+        <div class="habilidades-grid">
+            <div class="habilidade-card">
+                <h3>microcontroladores</h3>
+                <ul>
+                    <li>ESP8266 / ESP32</li>
+                    <li>STM32</li>
+                    <li>Raspberry Pi</li>
+                    <li>Sensores LED IR</li>
+                </ul>
+            </div>
+            <div class="habilidade-card">
+                <h3>programacao_software</h3>
+                <ul>
+                    <li>MATLAB</li>
+                    <li>Python (Iniciante)</li>
+                    <li>C/C++ Embedded</li>
+                    <li>Firmware Development</li>
+                </ul>
+            </div>
+            <div class="habilidade-card">
+                <h3>eletronica_hardware</h3>
+                <ul>
+                    <li>Circuitos Analógicos</li>
+                    <li>PCB Design</li>
+                    <li>Análise de Circuitos</li>
+                    <li>Prototipagem Eletrônica</li>
+                </ul>
+            </div>
+            <div class="habilidade-card">
+                <h3>visao_computacional</h3>
+                <ul>
+                    <li>Câmeras & Captura</li>
+                    <li>Processamento de Imagem</li>
+                    <li>Computer Vision</li>
+                    <li>Sensoriamento Óptico</li>
+                </ul>
+            </div>
+            <div class="habilidade-card">
+                <h3>design_modelagem</h3>
+                <ul>
+                    <li>Fusion 360</li>
+                    <li>Modelagem 3D</li>
+                    <li>CAD para Manufatura</li>
+                    <li>Prototipagem Rápida</li>
+                </ul>
+            </div>
+            <div class="habilidade-card">
+                <h3>areas_interesse</h3>
+                <ul>
+                    <li>IoT & Conectividade</li>
+                    <li>Sistemas Embarcados</li>
+                    <li>Automação Inteligente</li>
+                    <li>Visão Computacional</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projetos">
+        <h2>projetos --show-all</h2>
+        <div class="projetos-grid">
+            <div class="projeto-card">
+                <div class="projeto-img">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2282/2282188.png" alt="IoT Icon">
+                </div>
+                <div class="projeto-content">
+                    <h3>automacao_residencial.py</h3>
+                    <p>Desenvolvimento de um sistema IoT para controle e monitoramento de ambientes residenciais usando ESP32 e sensores inteligentes.</p>
+                    <div class="projeto-tags">
+                        <span class="tag">IoT</span>
+                        <span class="tag">ESP32</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </div>
+            </div>
+            <div class="projeto-card">
+                <div class="projeto-img">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1295/1295958.png" alt="Control Icon">
+                </div>
+                <div class="projeto-content">
+                    <h3>controle_pid.ino</h3>
+                    <p>Implementação de controlador PID para sistema de aquecimento com interface gráfica para monitoramento em tempo real.</p>
+                    <div class="projeto-tags">
+                        <span class="tag">Controle</span>
+                        <span class="tag">Arduino</span>
+                        <span class="tag">MATLAB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="projeto-card">
+                <div class="projeto-img">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2626/2626302.png" alt="Robot Icon">
+                </div>
+                <div class="projeto-content">
+                    <h3>robo_seguidor.cpp</h3>
+                    <p>Projeto de robô autônomo com sensores infravermelhos e controle de motores para competição de robótica.</p>
+                    <div class="projeto-tags">
+                        <span class="tag">Robótica</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">Sensores</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="contato">
+            <h2>contato.sh</h2>
+            <p>> Interessado em colaborar ou saber mais sobre meus projetos? Entre em contato!</p>
+            <div class="contato-links">
+                <a href="mailto:seu.email@exemplo.com" class="contato-link">[ EMAIL ]</a>
+                <a href="https://linkedin.com/in/seu-perfil" target="_blank" class="contato-link">[ LINKEDIN ]</a>
+                <a href="https://github.com/seu-usuario" target="_blank" class="contato-link">[ GITHUB ]</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Seu Nome - Engenharia de Controle e Automação</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
